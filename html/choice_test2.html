@@ -1,0 +1,143 @@
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;">
+  <meta name="format-detection" content="telephone=no">
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+  <meta content="telephone=no" name="format-detection">
+  <title>测试二</title>
+  <!-- <link href="../css/reset.css" rel="stylesheet" type="text/css"/> -->
+  <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+  <link href="../css/weui.css" rel="stylesheet" type="text/css"/>
+  <style>
+    img {
+      width: 115px;
+      height: 130px;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+    }
+    h1 {
+      font-size: 35px;
+      padding: 160px 0 150px 0;
+      background-color: rgb(68, 112, 233);
+      color: white;
+    }
+    h1 span {
+      font-size: 28px;
+    }
+    .start_page {
+      text-align: center;
+      font-size: 16px;
+    }
+    .question p {
+      width: 40%;
+      margin: 0 auto;
+      position: relative;
+      top: -50px;
+      background-color: white;
+      padding: 15px;
+      border: 2px solid rgb(68, 112, 233);
+    }
+    .weui-cell_select {
+      width: 40%;
+      margin: 0 auto;
+    }
+    .button-sp-area {
+      margin: 0 auto;
+      padding: 21px 0;
+      width: 40%;
+    }
+    .weui-btn_plain-default {
+      color: white;
+      border: none;
+      background-color: rgb(68, 112, 233);
+    }
+  </style>
+</head>
+<body>
+  <div class="start_page">
+    <img src="../image/box_cat.png"/>
+    <h1>
+      爱的选择<br />
+      <span>测评二</span>
+    </h1>
+  </div>
+  <div class="mask">
+    <img />
+  </div>
+  <div class="question">
+    <p>
+      一会儿我会让你再回到那个场景当中，就是说过去的那个人伤害你的那一天，来看一看经过了刚才这样的经验，分数会是多少。来，请闭上眼睛，去感受一下，在此时此刻回到当时的那个伤害你的那个片刻当中，让那个记忆重新浮现。
+    同样的分数，其实前面你有过一个，1分是完全不宽恕，无法原谅。而10分就是你已经放手放下了这段事情，这件事情过去的已经真正过去了。那么现在你的感受是几分呢？
+    </p>
+    <div class="weui-cell weui-cell_select weui-cell_select-after">
+        <div class="weui-cell__hd">
+            <label for="" class="weui-label">选择分数</label>
+        </div>
+        <div class="weui-cell__bd">
+            <select class="weui-select" id="select" name="select2">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+
+        </div>
+    </div>
+    <div class="button-sp-area">
+      <a id="next" href="javascript:;" class="weui-btn weui-btn_plain-default">确定</a>
+    </div>
+  </div>
+<script src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>
+<script src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+<script>
+var APP_ID = 'qGFB1luntmsgGKtlN7yNuUwz-gzGzoHsz';
+
+// 应用 Key，用来校验权限（Web 端可以配置安全域名来保护数据安全）
+var APP_KEY = 'M82a7wxHj7l5ewXuOiwAzzW0';
+
+// 初始化
+AV.init({
+appId: APP_ID,
+appKey: APP_KEY
+});
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
+
+var query = new AV.Query('Customer');
+$("#next").on('click', function(e){
+  query.get(getUrlParameter('id')).then(function (customer) {
+    var choice2 = $('#select')[0].value;
+
+    customer.set('choice_test2', choice2)
+    customer.save().then(function(){
+        location.href="./choice_result.html?id=" +  getUrlParameter('id')
+    }, function(){})
+    // console.log(createdAt);
+  }, function (error) {
+    // 失败了
+    console.log(error);
+  });
+})
+</script>
+</body>
+</html>
