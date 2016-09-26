@@ -88,7 +88,7 @@
             <label for="" class="weui-label">选择分数</label>
         </div>
         <div class="weui-cell__bd">
-            <select class="weui-select" id="select" name="select2">
+            <select class="weui-select" id="select1" name="select1">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -115,7 +115,7 @@
             <label for="" class="weui-label">选择分数</label>
         </div>
         <div class="weui-cell__bd">
-            <select class="weui-select" id="select" name="select2">
+            <select class="weui-select" id="select2" name="select2">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -169,13 +169,13 @@
   var query = new AV.Query('Customer');
   $("#next").on('click', function(e){
     query.get(getUrlParameter('id')).then(function (customer) {
-      // 成功获得实例
-      // todo 就是 id 为 558e20cbe4b060308e3eb36c 的 Todo 对象实例
-      var choice1 = $('#select')[0].value;
 
-      customer.set('choice_test1', choice1)
+      var p1 = $('#select1')[0].value;
+      var p2 = $('#select1')[0].value;
+
+      customer.set('relation_person1_me', p1)
+      customer.set('relation_person1_opposite', p2)
       customer.save().then(function(){
-
           location.href="./relation2.html?id=" + getUrlParameter('id')
 
       }, function(){})

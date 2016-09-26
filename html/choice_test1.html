@@ -147,7 +147,7 @@
       // todo 就是 id 为 558e20cbe4b060308e3eb36c 的 Todo 对象实例
       var choice1 = $('#select')[0].value;
 
-      customer.set('choice_test1', choice1)
+      customer.set('choice_test_before', choice1)
       customer.save().then(function(){
 
           location.href="./choice_test2.html?id=" + getUrlParameter('id')

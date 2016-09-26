@@ -138,9 +138,9 @@ $("#next").on('click', function(e){
   query.get(getUrlParameter('id')).then(function (customer) {
     var choice2 = $('#select')[0].value;
 
-    customer.set('choice_test2', choice2)
+    customer.set('choice_test_after', choice2)
     customer.save().then(function(){
-        location.href="./relation_start.html?id=" +  getUrlParameter('id')
+        location.href="./choice_result.html?id=" +  getUrlParameter('id')
     }, function(){})
     // console.log(createdAt);
   }, function (error) {

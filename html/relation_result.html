@@ -4,7 +4,7 @@
   <meta name="format-detection" content="telephone=no">
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
   <meta content="telephone=no" name="format-detection">
-  <title>测试二</title>
+  <title>4X2体验 结果</title>
   <!-- <link href="../css/reset.css" rel="stylesheet" type="text/css"/> -->
   <link href="../css/style.css" rel="stylesheet" type="text/css"/>
   <link href="../css/weui.css" rel="stylesheet" type="text/css"/>
@@ -29,11 +29,16 @@
       text-align: center;
       font-size: 16px;
     }
+    .question {
+      position: relative;
+      top: -108px;
+    }
     .question p {
       width: 40%;
       margin: 0 auto;
       position: relative;
-      top: -50px;
+      float: right;
+      /*top: -50px;*/
       background-color: white;
       padding: 15px;
       border: 2px solid rgb(68, 112, 233);
@@ -43,6 +48,7 @@
       margin: 0 auto;
     }
     .button-sp-area {
+      clear: both;
       margin: 0 auto;
       padding: 21px 0;
       width: 40%;
@@ -55,17 +61,26 @@
     .aOverB, .aEqualB, .less, .more {
       display: none;
     }
+    #chart {
+      float: left;
+      margin: 0 auto;
+      width: 400px;
+      height: 400px;
+    }
   </style>
 </head>
 <body>
   <div class="start_page">
     <img src="../image/box_cat.png"/>
     <h1>
-      爱的选择<br />
+      4X2体验<br />
       <span>测评结果</span>
     </h1>
   </div>
   <div class="question">
+    <div id="chart">
+
+    </div>
     <p class="aOverB">
         一、根据你的体验分数，在本次Axun带领的心智升级体验中，你的宽恕分数不仅没有提升还降低了。
         <br />二、如果你不是和我们开玩笑的话。只有一种可能: 就是你在回忆过去的伤害时，过于深入，使得你沉浸在伤害造成的身体感受不舒服中，你反而难以投入后续的体验。这种暂时的“不舒服”引发了你对体验的质疑，因而无法走入更深的地方。其实这是正常现象。
@@ -100,6 +115,7 @@
   </div>
 <script src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>
 <script src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/echarts/3.2.3/echarts.min.js"></script>
 <script>
   var APP_ID = 'qGFB1luntmsgGKtlN7yNuUwz-gzGzoHsz';
 
@@ -128,8 +144,8 @@
   var A, B;
   var query = new AV.Query('Customer');
   query.get(getUrlParameter('id')).then(function (customer) {
-    A = customer.get('choice_test_before')
-    B = customer.get('choice_test_after')
+    A = customer.get('choice_test1')
+    B = customer.get('choice_test2')
     if (A > B) {
       $(".aOverB").show()
     }
@@ -152,6 +168,81 @@
   $("#next").on('click', function(e){
     location.href="./relation_start.html?id=" + getUrlParameter('id')
   })
+
+
+
+  // 基于准备好的dom，初始化echarts实例
+  var myChart = echarts.init(document.getElementById('chart'));
+    // 指定图表的配置项和数据
+    option = {
+      backgroundColor: '#2c343c',
+
+      title: {
+          text: '内在之花测评',
+          left: 'center',
+          top: 20,
+          textStyle: {
+              color: '#ccc'
+          }
+      },
+
+      tooltip : {
+          trigger: 'item',
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
+      },
+
+      visualMap: {
+          show: false,
+          min: 80,
+          max: 600,
+          inRange: {
+              colorLightness: [0, 1]
+          }
+      },
+      series : [
+          {
+              name:'访问来源',
+              type:'pie',
+              radius : '55%',
+              center: ['50%', '50%'],
+              data:[
+                  {value:500, name:'成就'},
+                  {value:700, name:'身心'},
+                  {value:1000, name:'精神'},
+                  {value:1000, name:'关系'},
+              ].sort(function (a, b) { return a.value - b.value}),
+              roseType: 'angle',
+              label: {
+                  normal: {
+                      textStyle: {
+                          color: 'rgba(255, 255, 255, 0.3)'
+                      }
+                  }
+              },
+              labelLine: {
+                  normal: {
+                      lineStyle: {
+                          color: 'rgba(255, 255, 255, 0.3)'
+                      },
+                      smooth: 0.2,
+                      length: 10,
+                      length2: 20
+                  }
+              },
+              itemStyle: {
+                  normal: {
+                      color: '#c23531',
+                      shadowBlur: 200,
+                      shadowColor: 'rgba(0, 0, 0, 0.5)'
+                  }
+              }
+          }
+      ]
+  };
+
+  // 使用刚指定的配置项和数据显示图表。
+  myChart.setOption(option);
+
 </script>
 </body>
 </html>
