@@ -65,9 +65,6 @@
       <span>测评结果</span>
     </h1>
   </div>
-  <div class="mask">
-    <img />
-  </div>
   <div class="question">
     <p class="aOverB">
         一、根据你的体验分数，在本次Axun带领的心智升级体验中，你的宽恕分数不仅没有提升还降低了。
@@ -140,11 +137,11 @@
       $(".aEqualB").show()
     }
     if (A < B && B <= 7) {
-      $('#less')[0].textContent= (B-A) + '分'
+      $('#less')[0].textContent= Number((B-A)/A).toFixed(2) * 100 + '%'
       $(".less").show()
     }
     if (A < B && B >= 8) {
-      $('#more')[0].textContent= (B-A) + '分'
+      $('#more')[0].textContent= Number((B-A)/A).toFixed(2) * 100 + '%'
       $(".more").show()
     }
   }, function (error) {
