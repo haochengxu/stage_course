@@ -4,7 +4,7 @@
   <meta name="format-detection" content="telephone=no">
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
   <meta content="telephone=no" name="format-detection">
-  <title>4X2体验 测试四</title>
+  <title>测试二</title>
   <!-- <link href="../css/reset.css" rel="stylesheet" type="text/css"/> -->
   <link href="../css/style.css" rel="stylesheet" type="text/css"/>
   <link href="../css/weui.css" rel="stylesheet" type="text/css"/>
@@ -39,12 +39,10 @@
       height: 400px;
     }
     .question {
-      display: inline-block;
-      width: 40%;
-      margin: 0 4.8%;
+      display: none;
     }
     .question p {
-      width: 90%;
+      width: 40%;
       margin: 0 auto;
       position: relative;
       top: -50px;
@@ -53,12 +51,12 @@
       border: 2px solid rgb(68, 112, 233);
     }
     .weui-cell_select {
-      width: 100%;
+      width: 40%;
       margin: 0 auto;
     }
     .button-sp-area {
       margin: 0 auto;
-      padding: 41px 0;
+      padding: 21px 0;
       width: 40%;
     }
     .weui-btn_plain-default {
@@ -72,11 +70,15 @@
   <div class="start_page">
     <img src="../image/box_cat.png"/>
     <h1>
-      4X2体验<br />
-      <span>第四个关系人</span>
+      换椅思考<br />
+      <span>测评二</span>
     </h1>
   </div>
-
+  <div class="mask">
+    <div class="button-sp-area">
+      <a id="enter" href="javascript:;" class="weui-btn weui-btn_plain-default">进入测评</a>
+    </div>
+  </div>
   <div class="question">
     <p>
       如果你评估一下你内心的这种感受打一个分数的话，1分是彻底的不宽恕，
@@ -88,7 +90,7 @@
             <label for="" class="weui-label">选择分数</label>
         </div>
         <div class="weui-cell__bd">
-            <select class="weui-select" id="select1" name="select2">
+            <select class="weui-select" id="select" name="select2">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -103,38 +105,10 @@
 
         </div>
     </div>
-  </div>
-  <div class="question">
-    <p>
-      如果你评估一下你内心的这种感受打一个分数的话，1分是彻底的不宽恕，
-  难过、怨恨，感受非常的不舒服。而10分是你生命获得了轻盈，获得了放下之后的轻松，
-  那此刻在这样的回忆片断里，感受到这种伤害的你是几分呢？
-    </p>
-    <div class="weui-cell weui-cell_select weui-cell_select-after">
-        <div class="weui-cell__hd">
-            <label for="" class="weui-label">选择分数</label>
-        </div>
-        <div class="weui-cell__bd">
-            <select class="weui-select" id="select2" name="select2">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-            </select>
-
-        </div>
+    <div class="button-sp-area">
+      <a id="next" href="javascript:;" class="weui-btn weui-btn_plain-default">确定</a>
     </div>
   </div>
-  <div class="button-sp-area">
-    <a id="next" href="javascript:;" class="weui-btn weui-btn_plain-default">确定</a>
-  </div>
-</div>
 <script src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>
 <script src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
 <script>
@@ -169,14 +143,15 @@
   var query = new AV.Query('Customer');
   $("#next").on('click', function(e){
     query.get(getUrlParameter('id')).then(function (customer) {
+      // 成功获得实例
+      // todo 就是 id 为 558e20cbe4b060308e3eb36c 的 Todo 对象实例
+      var choice1 = $('#select')[0].value;
 
-      var p1 = $('#select1')[0].value;
-      var p2 = $('#select2')[0].value;
-
-      customer.set('relation_person4_me', p1)
-      customer.set('relation_person4_opposite', p2)
+      customer.set('choice_test_before', choice1)
       customer.save().then(function(){
-          location.href="./relation_result.html?id=" + getUrlParameter('id')
+
+          location.href="./change_chair_result.html?id=" + getUrlParameter('id')
+
       }, function(){})
       // console.log(createdAt);
     }, function (error) {

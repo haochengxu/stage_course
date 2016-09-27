@@ -9,7 +9,6 @@
   <link href="../css/style.css" rel="stylesheet" type="text/css"/>
   <link href="../css/weui.css" rel="stylesheet" type="text/css"/>
   <style>
-
     h1 {
       font-size: 35px;
       padding: 170px 0 160px 0;
@@ -171,7 +170,7 @@
     query.get(getUrlParameter('id')).then(function (customer) {
 
       var p1 = $('#select1')[0].value;
-      var p2 = $('#select1')[0].value;
+      var p2 = $('#select2')[0].value;
 
       customer.set('relation_person1_me', p1)
       customer.set('relation_person1_opposite', p2)
