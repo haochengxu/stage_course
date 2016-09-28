@@ -96,22 +96,33 @@
   appKey: APP_KEY
   });
 
-
+  var query = new AV.Query('Customer');
   $('#login').on('click', function(e) {
     e.preventDefault();
+
     var name = $('#name')[0].value
     var phoneNumber = $('#phoneNumber')[0].value
     var password = $('#password')[0].value
     if (name && phoneNumber && password) {
-      customerInfo.save({
-        name: name,
-        phoneNumber:phoneNumber,
-        password:password
-      }).then(function(data) {
-        location.href = 'choice_test1.html?'  + 'id=' + data.id
-      }).catch(function(err) {
-        // alert('error:' + err);
-      });
+      query.equalTo('phone_number', phoneNumber);
+
+      query.find().then(function (result) {
+        if (result.length == 0) {
+          customerInfo.save({
+            name: name,
+            phone_number:phoneNumber,
+            // password:password
+          }).then(function(data) {
+            location.href = 'navigator.html?'  + 'id=' + data.id
+          }).catch(function(err) {
+            // alert('error:' + err);
+          });
+        } else {
+          location.href = 'navigator.html?'  + 'id=' + result[0].get('id')
+        }
+        }, function (error) {
+        });
+
     }
   })
   //
