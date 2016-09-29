@@ -72,6 +72,8 @@
     <h1>
       换椅思考<br />
       <span>后测评</span>
+      <span style="position: absolute;top: 10px;right: 15px;font-size: 22px;">欢迎你，<span id="name" style="font-size: 22px;"></span></span>
+
     </h1>
   </div>
   <div class="mask">
@@ -147,10 +149,10 @@
       // todo 就是 id 为 558e20cbe4b060308e3eb36c 的 Todo 对象实例
       var choice1 = $('#select')[0].value;
 
-      customer.set('choice_test_before', choice1)
+      customer.set('change_chair_test_after', choice1)
       customer.save().then(function(){
 
-          location.href="./change_chair_result.html?id=" + getUrlParameter('id')
+          location.href="./change_chair_result.html?id=" + getUrlParameter('id')+ '&name=' + getUrlParameter('name')
 
       }, function(){})
       // console.log(createdAt);
@@ -159,6 +161,7 @@
       console.log(error);
     });
   })
+  document.getElementById('name').textContent = getUrlParameter('name')
 
 </script>
 </body>

@@ -67,6 +67,8 @@
     <h1>
       爱的选择<br />
       <span>后测评</span>
+      <span style="position: absolute;top: 10px;right: 15px;font-size: 22px;">欢迎你，<span id="name" style="font-size: 22px;"></span></span>
+
     </h1>
   </div>
   <div class="mask">
@@ -133,6 +135,9 @@ $("#enter").on('click', function(e){
   $(".mask").hide();
   $(".question").show();
 })
+
+
+
 var query = new AV.Query('Customer');
 $("#next").on('click', function(e){
   query.get(getUrlParameter('id')).then(function (customer) {
@@ -140,7 +145,7 @@ $("#next").on('click', function(e){
 
     customer.set('choice_test_after', choice2)
     customer.save().then(function(){
-        location.href="./choice_result.html?id=" +  getUrlParameter('id')
+        location.href="./choice_result.html?id=" +  getUrlParameter('id')+ '&name=' + getUrlParameter('name')
     }, function(){})
     // console.log(createdAt);
   }, function (error) {
@@ -148,6 +153,8 @@ $("#next").on('click', function(e){
     console.log(error);
   });
 })
+document.getElementById('name').textContent = getUrlParameter('name')
+
 </script>
 </body>
 </html>

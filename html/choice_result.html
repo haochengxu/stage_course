@@ -73,6 +73,8 @@
     <h1>
       爱的选择<br />
       <span>测评结果</span>
+      <span style="position: absolute;top: 10px;right: 15px;font-size: 22px;">欢迎你，<span id="name" style="font-size: 22px;"></span></span>
+
     </h1>
   </div>
   <div class="question">
@@ -129,6 +131,7 @@
 <script src="http://cdn.bootcss.com/echarts/3.2.3/echarts.min.js"></script>
 
 <script>
+
   var APP_ID = 'qGFB1luntmsgGKtlN7yNuUwz-gzGzoHsz';
 
   // 应用 Key，用来校验权限（Web 端可以配置安全域名来保护数据安全）
@@ -156,6 +159,7 @@
   var A, B;
   var query = new AV.Query('Customer');
   query.get(getUrlParameter('id')).then(function (customer) {
+
     A = customer.get('choice_test_before')
     B = customer.get('choice_test_after')
 
@@ -188,7 +192,7 @@
   });
 
   $("#next").on('click', function(e){
-    location.href="./navigator.html?id=" + getUrlParameter('id')
+    location.href="./navigator.html?id=" + getUrlParameter('id')+ '&name=' + getUrlParameter('name')
   })
   option = {
       title : {
@@ -241,6 +245,7 @@
   var myChart = echarts.init(document.getElementById('chart'));
 
   // 使用刚指定的配置项和数据显示图表。
+  document.getElementById('name').textContent = getUrlParameter('name')
 
 </script>
 </body>

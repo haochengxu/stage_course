@@ -72,6 +72,7 @@
     <h1>
       换椅思考<br />
       <span>前测评</span>
+      <span style="position: absolute;top: 10px;right: 15px;font-size: 22px;">欢迎你，<span id="name" style="font-size: 22px;"></span></span>
     </h1>
   </div>
   <div class="mask">
@@ -111,6 +112,7 @@
 <script src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>
 <script src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
 <script>
+
   var APP_ID = 'qGFB1luntmsgGKtlN7yNuUwz-gzGzoHsz';
 
   // 应用 Key，用来校验权限（Web 端可以配置安全域名来保护数据安全）
@@ -146,10 +148,10 @@
       // todo 就是 id 为 558e20cbe4b060308e3eb36c 的 Todo 对象实例
       var choice1 = $('#select')[0].value;
 
-      customer.set('choice_test_before', choice1)
+      customer.set('change_chair_test_before', choice1)
       customer.save().then(function(){
 
-          location.href="./change_chair_test2.html?id=" + getUrlParameter('id')
+          location.href="./change_chair_test2.html?id=" + getUrlParameter('id')+ '&name=' + getUrlParameter('name')
 
       }, function(){})
       // console.log(createdAt);
@@ -158,6 +160,7 @@
       console.log(error);
     });
   })
+  document.getElementById('name').textContent = getUrlParameter('name')
 
 </script>
 </body>

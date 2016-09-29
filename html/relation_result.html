@@ -33,7 +33,6 @@
       position: relative;
     }
     .question p {
-      width: 40%;
       margin: 0 auto;
       margin-left: 4%;
       position: relative;
@@ -41,6 +40,7 @@
       /*top: -50px;*/
       background-color: white;
       padding: 15px;
+      color: #666;
       /*border: 2px solid rgb(68, 112, 233);*/
     }
     .weui-cell_select {
@@ -62,10 +62,15 @@
       display: none;
     }
     #chart {
-      float: left;
+      /*float: left;*/
       margin: 0 auto;
-      width: 50%;
+      margin-left: 20px;
+      margin-top: 40px;
+      /*width: 50%;*/
       height: 400px;
+    }
+    .title {
+      color: #333;
     }
   </style>
 </head>
@@ -75,24 +80,32 @@
     <h1>
       4X2体验<br />
       <span>测评结果</span>
+      <span style="position: absolute;top: 10px;right: 15px;font-size: 22px;">欢迎你，<span id="name" style="font-size: 22px;"></span></span>
     </h1>
   </div>
   <div class="question">
     <div id="chart">
     </div>
     <p>
+      这一次测评的是：你作为评估人，和四位最重视的关系人之间，对彼此关系的满意度，从两人两个世界来先后感知，看看在关系中，有哪些你所不知道
+      的情况存在。接下来是你和你提到的四位人生中最重要的人之间的关系。那么测评结果是：
+      <br />
+      <span class="title">第一段关系</span><br />
       <span id="first_me"></span><br />
       <span id="first_op"></span><br />
       <span id="first_diff"></span><br />
       <br />
+      <span class="title">第二段关系</span><br />
       <span id="second_me"></span><br />
       <span id="second_op"></span><br />
       <span id="second_diff"></span><br />
       <br />
+      <span class="title">第三段关系</span><br />
       <span id="third_me"></span><br />
       <span id="third_op"></span><br />
       <span id="third_diff"></span><br />
       <br />
+      <span class="title">第四段关系</span><br />
       <span id="forth_me"></span><br />
       <span id="forth_op"></span><br />
       <span id="forth_diff"></span><br />
@@ -105,6 +118,7 @@
 <script src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/echarts/3.2.3/echarts.min.js"></script>
 <script>
+
   var relationDescription0 = {
     '0': '恭喜你，看起来你十分满意，这种感觉一定让你很喜欢和对方在一起。',
     '1': '恭喜你，看起来你相当满意，作为你最最重视的人，能有这样的分值，你应该很享受这个关系，对方一定很棒，不是吗？',
@@ -130,6 +144,7 @@
     '5':'此关系中有一个信息值得你要重视起来：相比你而言，对方对这个关系更不满意，这就意味着，你和对方的沟通存在一定的问题，如果对方是你生命中如此重要的人，那么这种情况就是在消耗你自己的幸福感，因为幸福感主要来自重要关系的链接质量。同时，如果对方不太擅长遮掩自己的情绪，你会受到对方不知不觉中的隐形的伤害。既然对方如此重要，请重视此情况，采取措施，增加科学有效的沟通，避免日后引发更多的遗憾。',
     '6':'系统检测出来的一个不太好的消息：看起来对方非常不满意你，而且值得重视的是，在对方不满意的同时，你似乎不太受到对方的冷漠态度的影响，发生这样的情况有两种可能：要么对方太会隐藏自己的不满，要么你对对方的爱是无条件的。你不仅应该更加珍视这段关系，并应该尽快改善，用科学有效的沟通，找到让对方内心不满的深层原因，否则这种情感天平失衡的状态在未来是难以长久的。'
   }
+  //分数映射
   var map1 = [
     [10],
     [9,8],
@@ -138,6 +153,7 @@
     [2,3],
     [1]
   ]
+  //分数映射
   var map2 = [
     [-4,-5,-6,-7,-8,-9,-10],
     [-2,-3],
@@ -174,6 +190,24 @@
 
   var query = new AV.Query('Customer');
   query.get(getUrlParameter('id')).then(function (customer) {
+    document.getElementById('name').textContent = customer.get('name')
+    var gradeArray = [
+      customer.get('relation_person1_me'),
+      customer.get('relation_person2_me'),
+      customer.get('relation_person3_me'),
+      customer.get('relation_person4_me'),
+      customer.get('relation_person1_opposite'),
+      customer.get('relation_person2_opposite'),
+      customer.get('relation_person3_opposite'),
+      customer.get('relation_person4_opposite')
+    ]
+    option.series[0].data.forEach(function(value, index) {
+      value.value = gradeArray[index]
+      value.name = value.name + '(' + gradeArray[index] + ')'
+    })
+    myChart.setOption(option);
+
+
     var first = customer.get('relation_person1_me') - customer.get('relation_person1_opposite')
     var second = customer.get('relation_person2_me') - customer.get('relation_person2_opposite')
     var third = customer.get('relation_person3_me') - customer.get('relation_person3_opposite')
@@ -224,82 +258,132 @@
   });
 
   $("#next").on('click', function(e){
-    location.href="./navigator.html?id=" + getUrlParameter('id')
+    location.href="./navigator.html?id=" + getUrlParameter('id')+ '&name=' + getUrlParameter('name')
   })
 
+  var option = {
+    title : {
+        text: '4X2体验',
+        // subtext: '纯属虚构',
+        x:'center'
+    },
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+        x : 'center',
+        y : 'bottom',
+        data:['rose1','rose2','rose3','rose4','rose5','rose6','rose7','rose8']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            // mark : {show: true},
+            // dataView : {show: true, readOnly: false},
+            magicType : {
+                show: true,
+                type: ['pie', 'funnel']
+            },
+            // restore : {show: true},
+            // saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    series : [
+        {
+            name:'面积模式',
+            type:'pie',
+            radius : [30, 110],
+            center : ['50%', '50%'],
+            roseType : 'area',
+            data:[
+                {value:10, name:'我对关系人一'},
+                {value:5, name:'我对关系人二'},
+                {value:15, name:'我对关系人三'},
+                {value:25, name:'我对关系人四'},
+                {value:20, name:'关系人一对我'},
+                {value:35, name:'关系人二对我'},
+                {value:30, name:'关系人三对我'},
+                {value:40, name:'关系人四对我'}
+            ]
+        }
+    ]
+};
+document.getElementById('name').textContent = getUrlParameter('name')
 
 
   // 基于准备好的dom，初始化echarts实例
   var myChart = echarts.init(document.getElementById('chart'));
     // 指定图表的配置项和数据
-    option = {
-      backgroundColor: '#2c343c',
-
-      title: {
-          text: '4X2体验',
-          left: 'center',
-          top: 20,
-          textStyle: {
-              color: '#ccc'
-          }
-      },
-
-      tooltip : {
-          trigger: 'item',
-          formatter: "{a} <br/>{b} : {c} ({d}%)"
-      },
-
-      visualMap: {
-          show: false,
-          min: 80,
-          max: 600,
-          inRange: {
-              colorLightness: [0, 1]
-          }
-      },
-      series : [
-          {
-              name:'访问来源',
-              type:'pie',
-              radius : '55%',
-              center: ['50%', '50%'],
-              data:[
-                  {value:500, name:'成就'},
-                  {value:700, name:'身心'},
-                  {value:1000, name:'精神'},
-                  {value:1000, name:'关系'},
-              ].sort(function (a, b) { return a.value - b.value}),
-              roseType: 'angle',
-              label: {
-                  normal: {
-                      textStyle: {
-                          color: 'rgba(255, 255, 255, 0.3)'
-                      }
-                  }
-              },
-              labelLine: {
-                  normal: {
-                      lineStyle: {
-                          color: 'rgba(255, 255, 255, 0.3)'
-                      },
-                      smooth: 0.2,
-                      length: 10,
-                      length2: 20
-                  }
-              },
-              itemStyle: {
-                  normal: {
-                      color: '#c23531',
-                      shadowBlur: 200,
-                      shadowColor: 'rgba(0, 0, 0, 0.5)'
-                  }
-              }
-          }
-      ]
-  };
+  //   option = {
+  //     backgroundColor: '#2c343c',
+  //
+  //     title: {
+  //         text: '4X2体验',
+  //         left: 'center',
+  //         top: 20,
+  //         textStyle: {
+  //             color: '#ccc'
+  //         }
+  //     },
+  //
+  //     tooltip : {
+  //         trigger: 'item',
+  //         formatter: "{a} <br/>{b} : {c} ({d}%)"
+  //     },
+  //
+  //     visualMap: {
+  //         show: false,
+  //         min: 80,
+  //         max: 600,
+  //         inRange: {
+  //             colorLightness: [0, 1]
+  //         }
+  //     },
+  //     series : [
+  //         {
+  //             name:'访问来源',
+  //             type:'pie',
+  //             radius : '55%',
+  //             center: ['50%', '50%'],
+  //             data:[
+  //                 {value:500, name:'成就'},
+  //                 {value:700, name:'身心'},
+  //                 {value:1000, name:'精神'},
+  //                 {value:1000, name:'关系'},
+  //             ].sort(function (a, b) { return a.value - b.value}),
+  //             roseType: 'angle',
+  //             label: {
+  //                 normal: {
+  //                     textStyle: {
+  //                         color: 'rgba(255, 255, 255, 0.3)'
+  //                     }
+  //                 }
+  //             },
+  //             labelLine: {
+  //                 normal: {
+  //                     lineStyle: {
+  //                         color: 'rgba(255, 255, 255, 0.3)'
+  //                     },
+  //                     smooth: 0.2,
+  //                     length: 10,
+  //                     length2: 20
+  //                 }
+  //             },
+  //             itemStyle: {
+  //                 normal: {
+  //                     color: '#c23531',
+  //                     shadowBlur: 200,
+  //                     shadowColor: 'rgba(0, 0, 0, 0.5)'
+  //                 }
+  //             }
+  //         }
+  //     ]
+  // };
 
   // 使用刚指定的配置项和数据显示图表。
-  myChart.setOption(option);
+
 
 </script>
 </body>

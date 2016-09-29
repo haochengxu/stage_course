@@ -74,14 +74,15 @@
     <h1>
       4X2体验<br />
       <span>第三个关系人</span>
+      <span style="position: absolute;top: 10px;right: 15px;font-size: 22px;">欢迎你，<span id="name" style="font-size: 22px;"></span></span>
+
     </h1>
   </div>
 
   <div class="question">
     <p>
-      如果你评估一下你内心的这种感受打一个分数的话，1分是彻底的不宽恕，
-  难过、怨恨，感受非常的不舒服。而10分是你生命获得了轻盈，获得了放下之后的轻松，
-  那此刻在这样的回忆片断里，感受到这种伤害的你是几分呢？
+      现在请请入第三个在你生命当中最重要的关系人，现在去感觉一下你对你们之间的关系的满意度
+      是几分呢？从1分到10分，从不可能更糟到不可能更好。你的分数是几分呢？
     </p>
     <div class="weui-cell weui-cell_select weui-cell_select-after">
         <div class="weui-cell__hd">
@@ -106,9 +107,9 @@
   </div>
   <div class="question">
     <p>
-      如果你评估一下你内心的这种感受打一个分数的话，1分是彻底的不宽恕，
-  难过、怨恨，感受非常的不舒服。而10分是你生命获得了轻盈，获得了放下之后的轻松，
-  那此刻在这样的回忆片断里，感受到这种伤害的你是几分呢？
+      那么作为第三个关系人的你，感觉一下你对你们之间的关系满意吗？1分是不可能更糟，
+      10分是不可能更好。那么你的分数作为被场地中心的人邀请来的第三个生
+      命中重要的人，你的感受你的满意度究竟是几分？
     </p>
     <div class="weui-cell weui-cell_select weui-cell_select-after">
         <div class="weui-cell__hd">
@@ -138,6 +139,7 @@
 <script src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>
 <script src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
 <script>
+
   var APP_ID = 'qGFB1luntmsgGKtlN7yNuUwz-gzGzoHsz';
 
   // 应用 Key，用来校验权限（Web 端可以配置安全域名来保护数据安全）
@@ -177,7 +179,7 @@
       customer.set('relation_person3_me', p1)
       customer.set('relation_person3_opposite', p2)
       customer.save().then(function(){
-          location.href="./relation4.html?id=" + getUrlParameter('id')
+          location.href="./relation4.html?id=" + getUrlParameter('id')+ '&name=' + getUrlParameter('name')
 
 
       }, function(){})
@@ -187,6 +189,7 @@
       console.log(error);
     });
   })
+  document.getElementById('name').textContent = getUrlParameter('name')
 
 </script>
 </body>

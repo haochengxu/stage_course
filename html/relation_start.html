@@ -71,6 +71,8 @@
     <img src="../image/box_cat.png"/>
     <h1>
       4X2体验
+      <span style="position: absolute;top: 10px;right: 15px;font-size: 22px;">欢迎你，<span id="name" style="font-size: 22px;"></span></span>
+
     </h1>
   </div>
   <div class="mask">
@@ -82,6 +84,7 @@
 <script src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>
 <script src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
 <script>
+
   var APP_ID = 'qGFB1luntmsgGKtlN7yNuUwz-gzGzoHsz';
 
   // 应用 Key，用来校验权限（Web 端可以配置安全域名来保护数据安全）
@@ -107,8 +110,10 @@
       }
   };
   $("#enter").on('click', function(e){
-    location.href="./relation1.html?id=" + getUrlParameter('id')
+    location.href="./relation1.html?id=" + getUrlParameter('id')+ '&name=' +  getUrlParameter('name')
   })
+  document.getElementById('name').textContent = getUrlParameter('name')
+
 </script>
 </body>
 </html>

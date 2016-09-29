@@ -74,14 +74,16 @@
     <h1>
       4X2体验<br />
       <span>第四个关系人</span>
+      <span style="position: absolute;top: 10px;right: 15px;font-size: 22px;">欢迎你，<span id="name" style="font-size: 22px;"></span></span>
+
     </h1>
   </div>
 
   <div class="question">
     <p>
-      如果你评估一下你内心的这种感受打一个分数的话，1分是彻底的不宽恕，
-  难过、怨恨，感受非常的不舒服。而10分是你生命获得了轻盈，获得了放下之后的轻松，
-  那此刻在这样的回忆片断里，感受到这种伤害的你是几分呢？
+来，那么我们就进入第四个也是最后一位关系人的评估。回到这个白色的体育场大小的空间当中，去把你生
+命当中最最重要的四个人当中的第四位请到这个空间里来。那么作为评估人的你，你感觉到的满意度是几分呢？1分是不
+可能更糟了，10分是不可能更好。那么此刻你对你们之间的关系的满意度是几分？
     </p>
     <div class="weui-cell weui-cell_select weui-cell_select-after">
         <div class="weui-cell__hd">
@@ -106,9 +108,9 @@
   </div>
   <div class="question">
     <p>
-      如果你评估一下你内心的这种感受打一个分数的话，1分是彻底的不宽恕，
-  难过、怨恨，感受非常的不舒服。而10分是你生命获得了轻盈，获得了放下之后的轻松，
-  那此刻在这样的回忆片断里，感受到这种伤害的你是几分呢？
+      现在我们去关系人那里，从他的眼睛请看到场地中心的这个自己。你是被邀
+      请来的第四位关系人，那么你和他之间的关系对于你来说你的满意度是几分呢？
+      1分是不可能更糟了，10分是不可能更好。那么你感觉到的满意度是几分呢？
     </p>
     <div class="weui-cell weui-cell_select weui-cell_select-after">
         <div class="weui-cell__hd">
@@ -138,6 +140,7 @@
 <script src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>
 <script src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
 <script>
+
   var APP_ID = 'qGFB1luntmsgGKtlN7yNuUwz-gzGzoHsz';
 
   // 应用 Key，用来校验权限（Web 端可以配置安全域名来保护数据安全）
@@ -176,7 +179,7 @@
       customer.set('relation_person4_me', p1)
       customer.set('relation_person4_opposite', p2)
       customer.save().then(function(){
-          location.href="./relation_result.html?id=" + getUrlParameter('id')
+          location.href="./relation_result.html?id=" + getUrlParameter('id')+ '&name=' + getUrlParameter('name')
       }, function(){})
       // console.log(createdAt);
     }, function (error) {
@@ -184,6 +187,7 @@
       console.log(error);
     });
   })
+  document.getElementById('name').textContent = getUrlParameter('name')
 
 </script>
 </body>

@@ -46,7 +46,8 @@
   </style>
 </head>
 <body>
-  <h1>欢迎来到开启驿站课堂</h1>
+  <h1>欢迎来到开启驿站课堂
+  </h1>
 
   <form class="loginForm">
     <img src="../image/box_cat1.png"/>
@@ -113,7 +114,7 @@
             phone_number:phoneNumber,
             // password:password
           }).then(function(data) {
-            location.href = 'navigator.html?'  + 'id=' + data.id
+            location.href = 'navigator.html?'  + 'id=' + data.id + '&name=' + name 
           }).catch(function(err) {
             // alert('error:' + err);
           });
