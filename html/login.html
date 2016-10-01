@@ -11,12 +11,19 @@
   <style>
    h1 {
      font-size: 35px;
-     padding: 170px 0 160px 0;
+     padding: 130px 0 110px 0;
      background-color: rgb(68, 112, 233);
      color: white;
    }
+   img {
+     width: 115px;
+     height: 130px;
+     border: 2px solid rgb(68, 112, 233);
+     position: relative;;
+     top: -50px;
+   }
     .loginForm {
-      margin: 0 auto;
+      margin: 30px auto;
       position: relative;
       width: 400px;
       text-align: center;
@@ -26,16 +33,10 @@
       width: 150px;
       text-align: left;
     }
-    .loginForm img {
-      width: 115px;
-      height: 130px;
-      border: 2px solid rgb(68, 112, 233);
-      position: relative;;
-      top: -50px;
-    }
+
     .button-sp-area {
       margin: 0 auto;
-      padding: 21px 0;
+      padding: 25px 0;
       width: 60%;
     }
     .weui-btn_plain-default {
@@ -43,14 +44,24 @@
       border: none;
       background-color: rgb(68, 112, 233);
     }
+    .fault {
+      position: absolute;
+      left: 145px;
+      bottom: -17px;
+      font-size: 13px;
+      color: #FF6666;
+      display:none;
+    }
   </style>
 </head>
 <body>
-  <h1>欢迎来到开启驿站课堂
+
+  <h1>
+    <img src="../image/box_cat.png"/><br />
+    欢迎来到开启驿站课堂
   </h1>
 
   <form class="loginForm">
-    <img src="../image/box_cat1.png"/>
       <div class="weui-cells weui-cells_form">
       <div class="weui-cell">
           <div class="weui-cell__hd">
@@ -74,6 +85,7 @@
           </div>
           <div class="weui-cell__hd">
               <input id="password" class="weui-input" type="password" placeholder="请输入密码">
+              <span class="fault">您的密码输入有误</span>
           </div>
       </div>
       <div class="button-sp-area">
@@ -124,6 +136,11 @@ var APP_KEY = '5bkthPBiagLdabY4kl5cwbsj';
           }
           }, function (error) {
           });
+      } else {
+        $('.fault').show()
+        setTimeout(function() {
+          $('.fault').hide()
+        }, 3000)
       }
 
     }
