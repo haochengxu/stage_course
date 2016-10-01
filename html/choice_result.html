@@ -30,6 +30,7 @@
       font-size: 16px;
     }
     .question p {
+      letter-spacing: 1px;
       width: 80%;
       margin: 0 auto;
       position: relative;
@@ -71,9 +72,9 @@
   <div class="start_page">
     <img src="../image/box_cat.png"/>
     <h1>
-      爱的选择<br />
+      爱的选择体验<br />
       <span>测评结果</span>
-      <span style="position: absolute;top: 10px;right: 15px;font-size: 22px;">欢迎你，<span id="name" style="font-size: 22px;"></span></span>
+      <span style="position: absolute;top: 25px;right: 30px;font-size: 22px;">欢迎你，<span id="name" style="font-size: 22px;"></span></span>
 
     </h1>
   </div>
@@ -131,11 +132,11 @@
 <script src="http://cdn.bootcss.com/echarts/3.2.3/echarts.min.js"></script>
 
 <script>
+// 应用 ID，用来识别应用
+var APP_ID = 'JppVTp1E3NxhFhfpRpoTwDco-gzGzoHsz';
 
-  var APP_ID = 'qGFB1luntmsgGKtlN7yNuUwz-gzGzoHsz';
-
-  // 应用 Key，用来校验权限（Web 端可以配置安全域名来保护数据安全）
-  var APP_KEY = 'M82a7wxHj7l5ewXuOiwAzzW0';
+// 应用 Key，用来校验权限（Web 端可以配置安全域名来保护数据安全）
+var APP_KEY = '5bkthPBiagLdabY4kl5cwbsj';
 
   // 初始化
   AV.init({
@@ -160,8 +161,8 @@
   var query = new AV.Query('Customer');
   query.get(getUrlParameter('id')).then(function (customer) {
 
-    A = customer.get('choice_test_before')
-    B = customer.get('choice_test_after')
+    A = Number(customer.get('choice_test_before'))
+    B = Number(customer.get('choice_test_after'))
 
     option.series[0].data.push(Number(A))
     option.series[1].data.push(Number(B))
@@ -176,14 +177,14 @@
       $(".aEqualB").show()
     }
     if (A < B && B <= 7) {
-      $('#less')[0].textContent= Number((B-A)/A).toFixed(2) * 100 + '%'
+      $('#less')[0].textContent= Number((Number((B-A)/A).toFixed(2))).toFixed(2) * 100 + '%'
       $(".less").show()
       if (B - A <= 2) {
         $(".less-third").show()
       }
     }
     if (A < B && B >= 8) {
-      $('#more')[0].textContent= Number((B-A)/A).toFixed(2) * 100 + '%'
+      $('#more')[0].textContent= Number((Number((B-A)/A).toFixed(2))).toFixed(2) * 100 + '%'
       $(".more").show()
     }
   }, function (error) {

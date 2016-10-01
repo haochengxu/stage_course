@@ -30,6 +30,7 @@
       font-size: 16px;
     }
     .question p {
+      letter-spacing: 1px;
       width: 80%;
       margin: 0 auto;
       position: relative;
@@ -68,16 +69,16 @@
   <div class="start_page">
     <img src="../image/box_cat.png"/>
     <h1>
-      换椅思考<br />
+      换椅思考体验<br />
       <span>测评结果</span>
-      <span style="position: absolute;top: 10px;right: 15px;font-size: 22px;">欢迎你，<span id="name" style="font-size: 22px;"></span></span>
+      <span style="position: absolute;top: 25px;right: 30px;font-size: 22px;">欢迎你，<span id="name" style="font-size: 22px;"></span></span>
     </h1>
   </div>
   <div class="question">
     <div id="chart">
     </div>
     <p>
-      在本次“爱的选择”体验中，对于在某一场景下，你希望放下的过去伤害你的人，
+      在本次“换椅思考”体验中，对于在某一场景下，你希望放下的过去伤害你的人，
       1分是彻底的不宽恕，不放下，感受非常不舒服。10分是你感受到生命获得了轻盈，获得了放下之后的轻松。
       你在体验前的“放下”分数：<span id="A"></span> 
       你在体验后的“放下”分数：<span id="B"></span>
@@ -125,10 +126,11 @@
 
 <script>
 
-  var APP_ID = 'qGFB1luntmsgGKtlN7yNuUwz-gzGzoHsz';
+// 应用 ID，用来识别应用
+var APP_ID = 'JppVTp1E3NxhFhfpRpoTwDco-gzGzoHsz';
 
-  // 应用 Key，用来校验权限（Web 端可以配置安全域名来保护数据安全）
-  var APP_KEY = 'M82a7wxHj7l5ewXuOiwAzzW0';
+// 应用 Key，用来校验权限（Web 端可以配置安全域名来保护数据安全）
+var APP_KEY = '5bkthPBiagLdabY4kl5cwbsj';
 
   // 初始化
   AV.init({
@@ -152,8 +154,11 @@
   var A, B;
   var query = new AV.Query('Customer');
   query.get(getUrlParameter('id')).then(function (customer) {
-    A = customer.get('change_chair_test_before')
-    B = customer.get('change_chair_test_after')
+    A = Number(customer.get('change_chair_test_before'))
+    B = Number(customer.get('change_chair_test_after'))
+
+    $('#A')[0].textContent = A
+    $('#B')[0].textContent = B
 
     option.series[0].data.push(Number(A))
     option.series[1].data.push(Number(B))
@@ -166,14 +171,14 @@
       $(".aEqualB").show()
     }
     if (A < B && B <= 7) {
-      $('#less')[0].textContent= Number((B-A)/A).toFixed(2) * 100 + '%'
+      $('#less')[0].textContent= Number((Number((B-A)/A).toFixed(2)) * 100).toFixed(2) + '%'
       $(".less").show()
       if (B - A <= 2) {
         $(".less-third").show()
       }
     }
     if (A < B && B >= 8) {
-      $('#more')[0].textContent= Number((B-A)/A).toFixed(2) * 100 + '%'
+      $('#more')[0].textContent= NUmber((Number((B-A)/A).toFixed(2) * 100)).toFixed(2) + '%'
       $(".more").show()
     }
   }, function (error) {

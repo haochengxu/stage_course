@@ -4,7 +4,7 @@
   <meta name="format-detection" content="telephone=no">
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
   <meta content="telephone=no" name="format-detection">
-  <title>4X2体验 结果</title>
+  <title>幸福雷达测评 结果</title>
   <!-- <link href="../css/reset.css" rel="stylesheet" type="text/css"/> -->
   <link href="../css/style.css" rel="stylesheet" type="text/css"/>
   <link href="../css/weui.css" rel="stylesheet" type="text/css"/>
@@ -33,6 +33,7 @@
       position: relative;
     }
     .question p {
+      letter-spacing: 1px;
       margin: 0 auto;
       margin-left: 4%;
       position: relative;
@@ -71,6 +72,8 @@
     }
     .title {
       color: #333;
+      display: inline-block;
+      padding: 20px 0px 10px 0;
     }
   </style>
 </head>
@@ -78,9 +81,9 @@
   <div class="start_page">
     <img src="../image/box_cat.png"/>
     <h1>
-      4X2体验<br />
+      幸福雷达测评<br />
       <span>测评结果</span>
-      <span style="position: absolute;top: 10px;right: 15px;font-size: 22px;">欢迎你，<span id="name" style="font-size: 22px;"></span></span>
+      <span style="position: absolute;top: 25px;right: 30px;font-size: 22px;">欢迎你，<span id="name" style="font-size: 22px;"></span></span>
     </h1>
   </div>
   <div class="question">
@@ -163,10 +166,11 @@
     [2,3],
     [4,5,6,7,8,9,10],
   ]
-  var APP_ID = 'qGFB1luntmsgGKtlN7yNuUwz-gzGzoHsz';
+  // 应用 ID，用来识别应用
+  var APP_ID = 'JppVTp1E3NxhFhfpRpoTwDco-gzGzoHsz';
 
   // 应用 Key，用来校验权限（Web 端可以配置安全域名来保护数据安全）
-  var APP_KEY = 'M82a7wxHj7l5ewXuOiwAzzW0';
+  var APP_KEY = '5bkthPBiagLdabY4kl5cwbsj';
 
   // 初始化
   AV.init({
@@ -193,12 +197,12 @@
     document.getElementById('name').textContent = customer.get('name')
     var gradeArray = [
       customer.get('relation_person1_me'),
+            customer.get('relation_person1_opposite'),
       customer.get('relation_person2_me'),
+            customer.get('relation_person2_opposite'),
       customer.get('relation_person3_me'),
+            customer.get('relation_person3_opposite'),
       customer.get('relation_person4_me'),
-      customer.get('relation_person1_opposite'),
-      customer.get('relation_person2_opposite'),
-      customer.get('relation_person3_opposite'),
       customer.get('relation_person4_opposite')
     ]
     option.series[0].data.forEach(function(value, index) {
@@ -299,12 +303,12 @@
             roseType : 'area',
             data:[
                 {value:10, name:'我对关系人一'},
-                {value:5, name:'我对关系人二'},
-                {value:15, name:'我对关系人三'},
-                {value:25, name:'我对关系人四'},
                 {value:20, name:'关系人一对我'},
+                {value:5, name:'我对关系人二'},
                 {value:35, name:'关系人二对我'},
+                {value:15, name:'我对关系人三'},
                 {value:30, name:'关系人三对我'},
+                {value:25, name:'我对关系人四'},
                 {value:40, name:'关系人四对我'}
             ]
         }

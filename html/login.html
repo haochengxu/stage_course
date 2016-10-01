@@ -85,11 +85,11 @@
 <script src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
 <script>
 
-  // 应用 ID，用来识别应用
-  var APP_ID = 'qGFB1luntmsgGKtlN7yNuUwz-gzGzoHsz';
+// 应用 ID，用来识别应用
+var APP_ID = 'JppVTp1E3NxhFhfpRpoTwDco-gzGzoHsz';
 
-  // 应用 Key，用来校验权限（Web 端可以配置安全域名来保护数据安全）
-  var APP_KEY = 'M82a7wxHj7l5ewXuOiwAzzW0';
+// 应用 Key，用来校验权限（Web 端可以配置安全域名来保护数据安全）
+var APP_KEY = '5bkthPBiagLdabY4kl5cwbsj';
 
   // 初始化
   AV.init({
@@ -107,22 +107,24 @@
     if (name && phoneNumber && password) {
       query.equalTo('phone_number', phoneNumber);
 
-      query.find().then(function (result) {
-        if (result.length == 0) {
-          customerInfo.save({
-            name: name,
-            phone_number:phoneNumber,
-            // password:password
-          }).then(function(data) {
-            location.href = 'navigator.html?'  + 'id=' + data.id + '&name=' + name 
-          }).catch(function(err) {
-            // alert('error:' + err);
+      if (password == '20161001') {
+        query.find().then(function (result) {
+          if (result.length == 0) {
+            customerInfo.save({
+              name: name,
+              phone_number:phoneNumber,
+              // password:password
+            }).then(function(data) {
+              location.href = 'navigator.html?'  + 'id=' + data.id + '&name=' + name
+            }).catch(function(err) {
+              // alert('error:' + err);
+            });
+          } else {
+            location.href = 'navigator.html?'  + 'id=' + result[0].get('id') + '&name=' + name
+          }
+          }, function (error) {
           });
-        } else {
-          location.href = 'navigator.html?'  + 'id=' + result[0].get('id')
-        }
-        }, function (error) {
-        });
+      }
 
     }
   })
