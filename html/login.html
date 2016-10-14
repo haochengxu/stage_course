@@ -119,7 +119,7 @@ var APP_KEY = '5bkthPBiagLdabY4kl5cwbsj';
     if (name && phoneNumber && password) {
       query.equalTo('phone_number', phoneNumber);
 
-      if (password == '20161001') {
+      if (password == '20161015') {
         query.find().then(function (result) {
           if (result.length == 0) {
             customerInfo.save({
